@@ -1,0 +1,26 @@
+{% extends "simple_layout.html" %} {% from "_render_field.html" import render_field %} {% block content %}
+
+<h1 style="padding: 20px">Login to your Account</h1>
+<p style="padding-left: 20px">
+    Don't you have an account yet? Register <a href="{{ url_for('users.register') }}">here</a> for free!
+</p>
+<div class="content-section">
+    <form method="POST" action="" class="standard-form">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+
+            {{ render_field(form.username) }} {{ render_field(form.password) }}
+
+            <div class="form-check">
+                {{ form.remember(class="form-check-input") }} {{ form.remember.label(class="form-check-label") }}
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <div class="form-group">
+                {{ form.login(class="btn btn-outline-info") }}
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% endblock content%}

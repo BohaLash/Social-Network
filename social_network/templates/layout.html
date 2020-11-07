@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"> {% if title %}
+    <title>Social Network</title> - {{ title }}</title>
+    {% else %}
+    <title>Social Network - The best way to comunicate!</title>
+    {% endif %} {% block head%} {% endblock head%}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'main.css') }}">
+
+</head>
+
+<body>
+    <nav>
+        <form>
+            <input type="search" placeholder="Search people" aria-label="Search">
+            <input type="submit" value="Search">
+        </form>
+
+        <div>
+            <a class="btn" href="{{ url_for('main.mypage') }}">My Page</a>
+            <a class="btn" href="{{ url_for('main.newpost') }}">New Post</a>
+        </div>
+        <div>
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('users.logout') }}">Logout</a> {% else %}
+            <a href="{{ url_for('users.login') }}">Login</a>
+            <a href="{{ url_for('users.register') }}">Register</a> {% endif %}
+        </div>
+    </nav>
+    <div id="content">
+
+        {% block content %} {% endblock content%}
+
+    </div>
+
+    {% block scripts %} {% endblock scripts %}
+</body>
+
+</html>

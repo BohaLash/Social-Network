@@ -1,0 +1,22 @@
+{% extends 'layout.html' %} {% block content %}
+<section class="info">
+    <img src="../../static/img/{{ user.image_file }}">
+    <div class="infofiels">
+        <h1>{{user.name}}</h1>
+        <h3>{{user.username}}</h3>
+        <p>{% if user.gender %} Male {% else %} Female {% endif %}</p>
+        <p>Born {{user.born}}</p>
+        <p>Lives in {{user.city}}</p>
+        <button>Edit</button>
+    </div>
+</section>
+<section class="posts">
+    <h1>Posts: </h1>
+    {% for p in posts %}
+    <div style="text-align: left; border: dashed black; padding: 1em; margin: 3em;">
+        <p>{{p.text}}</p>
+        <h5>{{p.date_created}}</h5>
+    </div>
+    {% endfor %}
+</section>
+{% endblock content %}

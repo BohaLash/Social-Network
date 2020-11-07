@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em 3em;
+    background-color: lightgrey;
+    margin-bottom: 5em;
+}
+
+.btn {
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+    background-color: white;
+    padding: 0.5em;
+    margin: 1em;
+    border: 0.1em dashed black;
+}
+
+.info {
+    display: flex;
+    justify-content: center;
+}
+
+.infofiels {
+    padding-left: 1em;
+}
+
+.posts {
+    margin-top: 3em;
+    text-align: center;
+}
+
+form {
+    text-align: center;
+}

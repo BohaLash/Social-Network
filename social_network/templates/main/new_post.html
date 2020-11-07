@@ -1,0 +1,11 @@
+{% extends "layout.html" %} {% from "_render_field.html" import render_field %} {% block content %}
+
+<h1 style="text-align: center;">Create New Post</h1>
+
+
+<form method="POST" action="" class="standard-form">
+    {{ form.hidden_tag() }} {{ render_field(form.text) }} {{ form.submit(class="f") }}
+
+</form>
+
+{% endblock content%}
