@@ -46,6 +46,13 @@ class EditForm(FlaskForm):
                         FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Update')
 
+    def __init__(self):
+        super(EditForm, self).__init__()
+        self.name.data = current_user.name
+        self.gender.data = str(int(current_user.gender))
+        self.city.data = current_user.city
+        self.born.data = current_user.born
+
 
 # class ResetPasswordForm(FlaskForm):
 #     password = PasswordField('Password', validators=[DataRequired()])

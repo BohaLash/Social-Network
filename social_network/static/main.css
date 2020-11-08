@@ -38,3 +38,9 @@ nav {
 form {
     text-align: center;
 }
+
+fieldset {
+    margin: 3em;
+    padding: 1em;
+    text-align: left;
+}
