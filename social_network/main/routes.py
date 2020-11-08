@@ -12,14 +12,22 @@ from social_network.models import User, Post
 main = Blueprint("main", __name__)
 
 
-@main.route("/mypage")
+@main.route("/")
 @login_required
 def mypage():
     # p = Post(text='lorem hello hi !', date_created=datetime(
     #     2015, 6, 5, 8, 10, 10, 10), user_id=2)
     # db.session.add(p)
     # db.session.commit()
-    return render_template("main/my_page.html", user=User.query.get(current_user.id), posts=Post.query.filter_by(user_id=current_user.id).order_by(Post.date_created.desc()))
+    return render_template(
+        "main/my_page.html",
+        user=User.query.get(current_user.id),
+        posts=Post.query.filter_by(
+            user_id=current_user.id
+        ).order_by(
+            Post.date_created.desc()
+        )
+    )
 
 
 @main.route("/new_post", methods=["GET", "POST"])

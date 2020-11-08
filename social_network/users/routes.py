@@ -5,8 +5,7 @@ from social_network.models import User
 from social_network.users.forms import (
     RegistrationForm,
     LoginForm,
-    EditForm,
-    # ResetPasswordForm,
+    EditForm
 )
 from social_network.users.utils import save_picture
 from datetime import datetime
@@ -52,7 +51,6 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
-            # if user.all_fields():
             login_user(user, remember=form.remember.data)
             next_page = request.args.get("next")
             return (
@@ -60,13 +58,6 @@ def login():
                 if next_page
                 else redirect(url_for("main.mypage"))
             )
-            # else:
-            #     flash(
-            #         f"""Before you can login into your account, you need to fill info about yourself!""",
-            #         "primary",
-            #     )
-            #     redirect(url_for("users.welcome"))
-
         else:
             flash(
                 f"Sorry, the Login was unseccesfull. Please check your credentials and try again!",
@@ -84,23 +75,23 @@ def logout():
 @users.route("/edit", methods=["GET", "POST"])
 @login_required
 def edit():
-    form = UpdateAccountForm()
-    if form.validate_on_submit():
-        if form.picture.data:
-            picture_file = save_picture(form.picture.data)
-            current_user.image_file = picture_file
-        current_user.username = form.username.data
-        current_user.email = form.email.data
-        db.session.commit()
-        flash("Your account has been updated!", "success")
-        return redirect(url_for("users.account"))
-    elif request.method == "GET":
-        form.username.data = current_user.username
-        form.email.data = current_user.email
+    form = EditForm()
+    # if form.validate_on_submit():
+    #     if form.picture.data:
+    #         picture_file = save_picture(form.picture.data)
+    #         current_user.image_file = picture_file
+    #     current_user.username = form.username.data
+    #     current_user.email = form.email.data
+    #     db.session.commit()
+    #     flash("Your account has been updated!", "success")
+    #     return redirect(url_for("users.account"))
+    # elif request.method == "GET":
+    #     form.username.data = current_user.username
+    #     form.email.data = current_user.email
     image_file = url_for(
-        "static", filename="profile_pics/" + current_user.image_file)
+        "static", filename="img/" + current_user.image_file)
     return render_template(
-        "users/account.html", title="Account", image_file=image_file, form=form
+        "users/edit.html", image_file=image_file, form=form
     )
 
 

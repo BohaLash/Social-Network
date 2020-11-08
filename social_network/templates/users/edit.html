@@ -1,40 +1,24 @@
-{% extends 'layout.html' %}
-{% from "_render_field.html" import render_field %}
-{% block content %}
-    <div class="content-section">
-      <div class="media">
-        <img class="rounded-circle account-img" src="{{ image_file }}">
-        <div class="media-body">
-          <h2 class="account-heading">{{ current_user.username }}</h2>
-          <p class="text-secondary">{{ current_user.email }}</p>
-      </div>
-    </div>  
-    <div class="half-content-section">
-	  <form method="POST" action="" enctype="multipart/form-data">
-		  {{ form.hidden_tag() }}
-		  <fieldset class="form-group">
+{% extends 'layout.html' %} {% from "_render_field.html" import render_field %} {% block content %}
+<form method="POST" action="" enctype="multipart/form-data">
 
-			  {{ render_field(form.username) }}
+    {{ form.hidden_tag() }}
+    <fieldset>
+        {{ render_field(form.name) }} {{ render_field(form.gender) }} {{ render_field(form.city) }} {{ render_field(form.born) }} {{ form.picture.label() }} {{ form.picture(class="form-control-file") }}
+    </fieldset>
+    {% if form.picture.errors %}
+    <fieldset>
 
-			  {{ render_field(form.email) }}
+        <ul>
+            {% for error in form.picture.errors %}
+            <li>{{ error }}</li> {% endfor %}
+        </ul>
 
-			  <div class="form-group">
-				  {{ form.picture.label() }}
-				  {{ form.picture(class="form-control-file") }}
-				  {% if form.picture.errors %}
-					  {% for error in form.picture.errors %}
-						  <span class="text-danger">{{ error }}</span>
-					  {% endfor %}
-				  {% endif %}
-			  </div>
+    </fieldset>
+    {% endif %}
 
-		  </fieldset>
-
-		  <fieldset>
-			  <div class="form-group">
-				  {{ form.submit(class="btn btn-outline-info") }}
-			  </div>
-		  </fieldset>
-	  </form>
-	</div>
+    <fieldset>
+        {{ form.submit() }}
+    </fieldset>
+</form>
+</div>
 {% endblock content %}

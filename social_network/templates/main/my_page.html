@@ -7,7 +7,7 @@
         <p>{% if user.gender %} Male {% else %} Female {% endif %}</p>
         <p>Born {{user.born}}</p>
         <p>Lives in {{user.city}}</p>
-        <button>Edit</button>
+        <button onclick="location.href='{{ url_for('users.edit') }}'">Edit</button>
     </div>
 </section>
 <section class="posts">
