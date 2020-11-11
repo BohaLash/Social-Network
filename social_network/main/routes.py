@@ -13,17 +13,17 @@ main = Blueprint("main", __name__)
 
 
 @main.route("/")
+@main.route("/<user>")
 @login_required
-def mypage():
-    # p = Post(text='lorem hello hi !', date_created=datetime(
-    #     2015, 6, 5, 8, 10, 10, 10), user_id=2)
-    # db.session.add(p)
-    # db.session.commit()
+def profile(user=None):
+    u = User.query.filter_by(username=user).first()
+    if u is None:
+        u = current_user
     return render_template(
-        "main/my_page.html",
-        user=User.query.get(current_user.id),
+        "main/profile_page.html",
+        user=u,
         posts=Post.query.filter_by(
-            user_id=current_user.id
+            user_id=u.id
         ).order_by(
             Post.date_created.desc()
         )

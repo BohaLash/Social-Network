@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    text-align: center;
 }
 
 nav {
@@ -21,31 +22,19 @@ nav {
     border: 0.1em dashed black;
 }
 
-.info {
-    display: flex;
-    justify-content: center;
-}
-
-.infofiels {
-    padding-left: 1em;
-}
-
-.posts {
-    margin-top: 3em;
-    text-align: center;
-}
-
-form {
-    text-align: center;
-}
-
-fieldset {
-    margin: 3em;
-    padding: 1em;
-    text-align: left;
-}
-
 .m {
     text-align: center;
     color: darkgrey;
+}
+
+h1 {
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+form {
+    /* margin: 0 40em; */
+    display: inline-block;
+    text-align: left;
 }

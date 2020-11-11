@@ -17,9 +17,9 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(64), nullable=False)
     image_file = db.Column(db.String(32), nullable=False,
                            default="default_profile.jpg")
-    name = db.Column(db.String(64), unique=True, nullable=False)
+    name = db.Column(db.String(64), nullable=False)
     gender = db.Column(
-        db.Boolean(), nullable=False, default=False)
+        db.Boolean(), nullable=False)
     city = db.Column(db.String(32), nullable=False)
     born = db.Column(
         db.Integer)

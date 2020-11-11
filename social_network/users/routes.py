@@ -17,7 +17,7 @@ users = Blueprint("users", __name__)
 @users.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for("users.welcome"))
+        return redirect(url_for("main.profile"))
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode(
@@ -33,20 +33,14 @@ def register():
         )
         db.session.add(user)
         db.session.commit()
-        return redirect(url_for("main.mypage"))
+        return redirect(url_for("main.profile"))
     return render_template("users/register.html", form=form)
-
-
-@users.route("/welcome")
-def welcome():
-    db.create_all()
-    return render_template("users/welcome.html")
 
 
 @users.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for("main.mypage"))
+        return redirect(url_for("main.profile"))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -56,7 +50,7 @@ def login():
             return (
                 redirect(next_page)
                 if next_page
-                else redirect(url_for("main.mypage"))
+                else redirect(url_for("main.profile"))
             )
         else:
             flash(
@@ -76,55 +70,15 @@ def logout():
 @login_required
 def edit():
     form = EditForm()
-    # if form.validate_on_submit():
-    #     if form.picture.data:
-    #         picture_file = save_picture(form.picture.data)
-    #         current_user.image_file = picture_file
-    #     current_user.username = form.username.data
-    #     current_user.email = form.email.data
-    #     db.session.commit()
-    #     flash("Your account has been updated!", "success")
-    #     return redirect(url_for("users.account"))
-    # elif request.method == "GET":
-    #     form.username.data = current_user.username
-    #     form.email.data = current_user.email
-    image_file = url_for(
-        "static", filename="img/" + current_user.image_file)
-    return render_template(
-        "users/edit.html", image_file=image_file, form=form
-    )
-
-
-# @users.route("/reset_password", methods=["GET", "POST"])
-# def reset_password():
-#     if current_user.is_authenticated:
-#         return redirect(url_for("dash.dashboard"))
-#     form = RequestResetForm()
-#     if form.validate_on_submit():
-#         user = User.query.filter_by(email=form.email.data).first()
-#         send_reset_email(user)
-#         flash("An email has been sent with instructions to reset your password", "info")
-#         return redirect(url_for("users.login"))
-#     return render_template("users/reset_request.html", title="Reset Password", form=form)
-
-
-# @users.route("/reset_password/<token>", methods=["GET", "POST"])
-# def reset_token(token):
-#     if current_user.is_authenticated:
-#         return redirect(url_for("dash.dashboard"))
-#     user = User.verify_reset_token(token)
-#     if user is None:
-#         flash(
-#             "That is an invalid or expired token. Please try again to reset.", "warning"
-#         )
-#         return redirect(url_for("users.reset_password"))
-#     form = ResetPasswordForm()
-#     if form.validate_on_submit():
-#         hashed_password = bcrypt.generate_password_hash(form.password.data).decode(
-#             "utf-8"
-#         )
-#         user.password = hashed_password
-#         db.session.commit()
-#         flash(f"Your Password has been updated!", "success")
-#         return redirect(url_for("users.login"))
-#     return render_template("users/reset_token.html", title="Reset Password", form=form)
+    if form.validate_on_submit():
+        current_user.name = form.name.data
+        current_user.gender = bool(int(form.gender.data))
+        current_user.city = form.city.data
+        current_user.born = form.born.data
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            current_user.image_file = picture_file
+        db.session.commit()
+        return redirect(url_for("main.profile"))
+    form.fill()
+    return render_template("users/edit.html", form=form)

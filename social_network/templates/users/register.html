@@ -3,17 +3,11 @@
 <div class="content-section">
     <form method="POST" action="" class="standard-form">
         {{ form.hidden_tag() }}
-        <fieldset class="form-group">
-
-            {{ render_field(form.username) }} {{ render_field(form.password) }} {{ render_field(form.confirm_password) }} {{ render_field(form.name) }} {{ render_field(form.gender) }} {{ render_field(form.city) }} {{ render_field(form.born) }}
-
-        </fieldset>
-
         <fieldset>
-            <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info") }}
-            </div>
-        </fieldset>
+
+            {{ render_field(form.username) }} {{ render_field(form.password) }} {{ render_field(form.confirm_password) }} {{ render_field(form.name) }} {{ render_field(form.gender) }} {{ render_field(form.city) }} {{ render_field(form.born) }} {{ form.submit(class="btn
+            btn-outline-info") }}
+
     </form>
 </div>
 <div class="form-switcher">

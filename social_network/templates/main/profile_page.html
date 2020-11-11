@@ -4,7 +4,7 @@
     <div class="infofiels">
         <h1>{{user.name}}</h1>
         <h3>{{user.username}}</h3>
-        <p>{% if user.gender %} Male {% else %} Female {% endif %}</p>
+        <p>{% if user.gender %} Female {% else %} Male {% endif %}</p>
         <p>Born {{user.born}}</p>
         <p>Lives in {{user.city}}</p>
         <button onclick="location.href='{{ url_for('users.edit') }}'">Edit</button>
