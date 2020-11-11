@@ -1,7 +1,7 @@
 {% extends "simple_layout.html" %} {% from "_render_field.html" import render_field %} {% block content %}
-<h1 style="padding: 20px;">Register for free to Gigmate!</h1>
-<div class="content-section">
-    <form method="POST" action="" class="standard-form">
+<h1 style="padding: 20px;">Register to Social Network!</h1>
+<div>
+    <form method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset>
 
@@ -10,7 +10,7 @@
 
     </form>
 </div>
-<div class="form-switcher">
+<div>
     <p>
         Already have an account? Login <a href="{{ url_for('users.login') }}">here</a>.
     </p>

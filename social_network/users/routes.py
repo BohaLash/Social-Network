@@ -27,7 +27,7 @@ def register():
             username=form.username.data,
             password=hashed_password,
             name=form.name.data,
-            gender=bool(form.gender.data),
+            gender=bool(int(form.gender.data)),
             city=form.city.data,
             born=int(form.born.data),
         )

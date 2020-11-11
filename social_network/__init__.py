@@ -24,12 +24,10 @@ def create_app(config_class=Config):
 
     from social_network.users.routes import users
     from social_network.main.routes import main
-    from social_network.homepage.routes import homepage
     from social_network.errors.handlers import errors
 
     app.register_blueprint(users)
     app.register_blueprint(main)
-    app.register_blueprint(homepage)
     app.register_blueprint(errors)
 
     return app

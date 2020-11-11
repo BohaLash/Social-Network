@@ -42,5 +42,5 @@ def newpost():
         )
         db.session.add(newPost)
         db.session.commit()
-        return redirect(url_for("main.mypage"))
+        return redirect(url_for("main.profile"))
     return render_template("main/new_post.html", form=form)

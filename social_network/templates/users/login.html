@@ -5,18 +5,18 @@
     Don't you have an account yet? Register <a href="{{ url_for('users.register') }}">here</a> for free!
 </p>
 <div class="content-section">
-    <form method="POST" action="" class="standard-form">
+    <form method="POST" action="">
         {{ form.hidden_tag() }}
-        <fieldset class="form-group">
+        <fieldset>
 
             {{ render_field(form.username) }} {{ render_field(form.password) }}
 
-            <div class="form-check">
-                {{ form.remember(class="form-check-input") }} {{ form.remember.label(class="form-check-label") }}
+            <div>
+                {{ form.remember() }} {{ form.remember.label() }}
             </div>
 
-            <div class="form-group">
-                {{ form.login(class="btn btn-outline-info") }}
+            <div>
+                {{ form.login() }}
             </div>
         </fieldset>
     </form>
