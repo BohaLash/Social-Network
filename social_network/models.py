@@ -65,9 +65,9 @@ class Post(db.Model):
 class Friendship(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user1_id = db.Column(db.Integer, db.ForeignKey(
-        'user.id'), primary_key=True)
+        'user.id'), nullable=False)
     user2_id = db.Column(db.Integer, db.ForeignKey(
-        'user.id'), primary_key=True)
+        'user.id'), nullable=False)
 
     def __repr__(self):
         return f"FriendShip: user1_id={self.user1_id}, user2_id={self.user2_id}"

@@ -1,11 +1,23 @@
 {% extends 'layout.html' %} {% block scripts %}
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
 <script>
     function delFriend(id) {
         console.log('del')
         $.ajax({
             type: 'POST',
             url: '/del_friend',
+            data: {
+                friend_id: id
+            }
+        });
+        document.location.reload()
+    }
+
+    function addFriend(id) {
+        console.log('add')
+        $.ajax({
+            type: 'POST',
+            url: '/add_friend',
             data: {
                 friend_id: id
             }
@@ -28,9 +40,9 @@
 {% if f != None %}
 <section>
     {% if f %}
-    <botton class="btn" onclick="delFriend()">Delete from Friends</botton>
+    <botton class="btn" onclick="delFriend({{ user.id }})">Delete from Friends</botton>
     {% else %}
-    <botton class="btn" onclick="addFriend()">Add to Friends</botton>
+    <botton class="btn" onclick="addFriend({{ user.id }})">Add to Friends</botton>
     {% endif %}
 </section>
 {% endif %}
