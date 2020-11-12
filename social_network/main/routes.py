@@ -7,7 +7,7 @@ from social_network.main.forms import (
 from datetime import datetime
 
 from social_network import db
-from social_network.models import User, Post
+from social_network.models import User, Post, Friendship
 
 main = Blueprint("main", __name__)
 
@@ -19,6 +19,11 @@ def profile(user=None):
     u = User.query.filter_by(username=user).first()
     if u is None:
         u = current_user
+        friend = None
+    else:
+        friend = bool(Friendship.query.filter_by(
+            user2_id=u.id, user1_id=current_user.id).scalar())
+        print(friend)
     return render_template(
         "main/profile_page.html",
         user=u,
@@ -26,7 +31,8 @@ def profile(user=None):
             user_id=u.id
         ).order_by(
             Post.date_created.desc()
-        )
+        ),
+        f=friend
     )
 
 

@@ -49,3 +49,8 @@ fieldset {
     text-align: center;
     color: darkgrey;
 }
+
+section {
+    margin: 3em 0;
+    text-align: center;
+}

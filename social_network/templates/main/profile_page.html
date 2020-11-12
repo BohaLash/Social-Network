@@ -1,4 +1,19 @@
-{% extends 'layout.html' %} {% block content %}
+{% extends 'layout.html' %} {% block scripts %}
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.js"></script> -->
+<script>
+    function delFriend(id) {
+        console.log('del')
+        $.ajax({
+            type: 'POST',
+            url: '/del_friend',
+            data: {
+                friend_id: id
+            }
+        });
+        document.location.reload()
+    }
+</script>
+{% endblock scripts %} {% block content %}
 <section class="info">
     <img src="../../static/img/{{ user.image_file }}">
     <div class="infofiels">
@@ -7,9 +22,18 @@
         <p>{% if user.gender %} Female {% else %} Male {% endif %}</p>
         <p>Born {{user.born}}</p>
         <p>Lives in {{user.city}}</p>
-        <button onclick="location.href='{{ url_for('users.edit') }}'">Edit</button>
+        {% if f == None %} <button onclick="location.href='{{ url_for('users.edit') }}'">Edit</button> {% endif %}
     </div>
 </section>
+{% if f != None %}
+<section>
+    {% if f %}
+    <botton class="btn" onclick="delFriend()">Delete from Friends</botton>
+    {% else %}
+    <botton class="btn" onclick="addFriend()">Add to Friends</botton>
+    {% endif %}
+</section>
+{% endif %}
 <section class="posts">
     <h1>Posts: </h1>
     {% for p in posts %}
