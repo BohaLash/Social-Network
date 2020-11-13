@@ -13,14 +13,15 @@
 
 <body>
     <nav>
-        <form>
-            <input type="search" placeholder="Search people" aria-label="Search">
+        <form action="/search" method="post">
+            <input type="search" name="search" placeholder="Search people" aria-label="Search" required>
             <input type="submit" value="Search">
         </form>
 
         <div>
             <a class="btn" href="{{ url_for('main.profile') }}">My Page</a>
             <a class="btn" href="{{ url_for('main.newpost') }}">New Post</a>
+            <a class="btn" href="{{ url_for('main.friends') }}">My Friends</a>
         </div>
         <div>
             {% if current_user.is_authenticated %}

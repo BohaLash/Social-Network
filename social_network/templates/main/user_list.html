@@ -1,0 +1,54 @@
+{% extends 'layout.html' %} {% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+<script>
+    function delFriend(id) {
+        console.log('del')
+        $.ajax({
+            type: 'POST',
+            url: '/del_friend',
+            data: {
+                friend_id: id
+            }
+        });
+        document.location.reload()
+    }
+
+    function addFriend(id) {
+        console.log('add')
+        $.ajax({
+            type: 'POST',
+            url: '/add_friend',
+            data: {
+                friend_id: id
+            }
+        });
+        document.location.reload()
+    }
+</script>
+{% endblock scripts %} {% block content %}
+<section>
+    <h1>{% if f == None %} Friends {% else %} Search {% endif %}</h1>
+    {% if users %} {% for user in users %}
+    <div style="margin-bottom: 3em;">
+        <div class="info" onclick="location.href='/{{ user.username }}'">
+            <img src="../../static/img/{{ user.image_file }}" style="height: 5.5em;">
+            <div class="infofiels">
+                <h2>{{ user.name }}</h2>
+                <p>{{ user.username }}</p>
+
+            </div>
+        </div>
+        <div class="info">
+            <button onclick="location.href='/chat/{{ user.username }}'">Messages</button> {% if f == None or f[user.id] %}
+            <button onclick="delFriend({{ user.id }})">Delete</button> {% else %}
+            <button onclick="addFriend({{ user.id }})">Add</button> {% endif %}
+        </div>
+    </div>
+    {% endfor %} {% else %}
+    <p>
+        No {% if f == None %} Friends yet {% else %} Search Results {% endif %}
+    </p>
+    {% endif %}
+    <div></div>
+</section>
+{% endblock content %}

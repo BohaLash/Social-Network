@@ -48,7 +48,7 @@ class User(db.Model, UserMixin):
         return User.query.get(user_id)
 
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.image_file}', '{self.date_registered}')"
+        return f"User('{self.username}', '{self.name}')"
 
 
 class Post(db.Model):
@@ -71,3 +71,17 @@ class Friendship(db.Model):
 
     def __repr__(self):
         return f"FriendShip: user1_id={self.user1_id}, user2_id={self.user2_id}"
+
+
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(128), nullable=False)
+    date_created = db.Column(
+        db.DateTime, nullable=False, default=datetime.utcnow)
+    user1_id = db.Column(db.Integer, db.ForeignKey(
+        'user.id'), nullable=False)
+    user2_id = db.Column(db.Integer, db.ForeignKey(
+        'user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Post('{self.text}', '{self.date_created}', by {self.user_id})"

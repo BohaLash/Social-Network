@@ -23,6 +23,12 @@ def getFriendship(f_id):
     ).first()
 
 
+@main.route("/sql/create_all")
+def createAll():
+    db.create_all()
+    return redirect(url_for("main.profile"))
+
+
 @main.route("/")
 @main.route("/<user>")
 @login_required
@@ -46,10 +52,35 @@ def profile(user=None):
     )
 
 
-@main.route("/sql/create_all")
-def createAll():
-    db.create_all()
-    return redirect(url_for("main.profile"))
+@main.route("/search", methods=["GET", "POST"])
+@main.route("/search/<key>", methods=["GET", "POST"])
+@login_required
+def search(key=None):
+    if request.method == "POST":
+        key = request.form['search']
+        return redirect('/search/' + key)
+    result = User.query.filter(
+        User.id != current_user.id
+    ).filter(
+        or_(User.name.contains(key),
+            User.username.contains(key))
+    ).all()
+    print(result)
+    my_friends = User.query.filter(
+        User.id != current_user.id
+    ).filter(
+        or_(User.id == Friendship.user1_id,
+            User.id == Friendship.user2_id)
+    ).filter(
+        or_(Friendship.user1_id == current_user.id,
+            Friendship.user2_id == current_user.id)
+    ).all()
+    friends = dict((
+        u.id,
+        bool(u in my_friends)
+    ) for u in result)
+    print(friends)
+    return render_template("main/user_list.html", users=result, f=friends)
 
 
 @main.route("/new_post", methods=["GET", "POST"])
@@ -79,8 +110,8 @@ def addFriend():
     return 'success'
 
 
-@ main.route("/del_friend", methods=["POST"])
-@ login_required
+@main.route("/del_friend", methods=["POST"])
+@login_required
 def delFriend():
     f_id = int(request.form['friend_id'])
     f = getFriendship(f_id)
@@ -88,3 +119,18 @@ def delFriend():
         db.session.delete(f)
         db.session.commit()
     return 'success'
+
+
+@main.route("/friends")
+@login_required
+def friends():
+    friends = User.query.filter(
+        User.id != current_user.id
+    ).filter(
+        or_(User.id == Friendship.user1_id,
+            User.id == Friendship.user2_id)
+    ).filter(
+        or_(Friendship.user1_id == current_user.id,
+            Friendship.user2_id == current_user.id)
+    ).all()
+    return render_template("main/user_list.html", users=friends, f=None)
