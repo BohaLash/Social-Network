@@ -84,4 +84,4 @@ class Message(db.Model):
         'user.id'), nullable=False)
 
     def __repr__(self):
-        return f"Post('{self.text}', '{self.date_created}', by {self.user_id})"
+        return f"Message: '{self.text}' from '{self.user1_id}' to '{self.user1_id}' on '{self.date_created}')"

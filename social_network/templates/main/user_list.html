@@ -1,28 +1,27 @@
 {% extends 'layout.html' %} {% block scripts %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
 <script>
     function delFriend(id) {
         console.log('del')
-        $.ajax({
-            type: 'POST',
-            url: '/del_friend',
-            data: {
-                friend_id: id
-            }
-        });
-        document.location.reload()
+        let formData = new FormData();
+        formData.append('friend_id', id);
+        fetch('/del_friend', {
+            method: "POST",
+            body: formData
+        }).then(
+            () => document.location.reload()
+        )
     }
 
     function addFriend(id) {
         console.log('add')
-        $.ajax({
-            type: 'POST',
-            url: '/add_friend',
-            data: {
-                friend_id: id
-            }
-        });
-        document.location.reload()
+        let formData = new FormData();
+        formData.append('friend_id', id);
+        fetch('/add_friend', {
+            method: "POST",
+            body: formData
+        }).then(
+            () => document.location.reload()
+        )
     }
 </script>
 {% endblock scripts %} {% block content %}

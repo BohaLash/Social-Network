@@ -1,4 +1,4 @@
-from social_network.models import User, Post, Friendship
+from social_network.models import User, Post, Friendship, Message
 from social_network import db
 from datetime import datetime
 from social_network.main.forms import (
@@ -6,7 +6,7 @@ from social_network.main.forms import (
 )
 from flask import render_template, url_for, redirect, request, Blueprint
 from flask_login import login_required, current_user
-from sqlalchemy import or_
+from sqlalchemy import or_, and_
 
 
 main = Blueprint("main", __name__)
@@ -134,3 +134,29 @@ def friends():
             Friendship.user2_id == current_user.id)
     ).all()
     return render_template("main/user_list.html", users=friends, f=None)
+
+
+@main.route("/chat/<username>", methods=["GET", "POST"])
+@login_required
+def chat(username):
+    u = User.query.filter(User.username == username).first()
+    print(u)
+    if u is None:
+        return redirect(url_for("main.profile"))
+    if request.method == "POST":
+        text = request.form['message']
+        new_m = Message(
+            text=text,
+            user1_id=current_user.id,
+            user2_id=u.id
+        )
+        db.session.add(new_m)
+        db.session.commit()
+    m = Message.query.filter(
+        or_(
+            and_(Message.user1_id == u.id, Message.user2_id == current_user.id),
+            and_(Message.user2_id == u.id, Message.user1_id == current_user.id)
+        )
+    ).order_by(Message.date_created.desc()).all()
+    print(m)
+    return render_template("main/chat_page.html", user=u, messages=reversed(m), my_id=current_user.id)

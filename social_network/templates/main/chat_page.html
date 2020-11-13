@@ -1,0 +1,33 @@
+{% extends 'layout.html' %} {% block content %}
+<section class="info">
+    <img src="../../static/img/{{ user.image_file }}" style="height: 5.5em;">
+    <div class="infofiels">
+        <h1>{{user.name}}</h1>
+        <p>{{user.username}}</p>
+    </div>
+</section>
+<!-- {% if f != None %}
+<section>
+    {% if f %}
+    <botton class="btn" onclick="delFriend({{ user.id }})">Delete from Friends</botton>
+    {% else %}
+    <botton class="btn" onclick="addFriend({{ user.id }})">Add to Friends</botton>
+    {% endif %}
+</section>
+{% endif %} -->
+<section class="posts">
+    <h1>Messages: </h1>
+    {% for m in messages %}
+    <div style="text-align: {% if m.user1_id == my_id %} right; background-color: lightgray;{% else %} left; background-color: lightblue; {% endif %} padding: 0 3em;">
+        <p>{{ m.text }}</p>
+        <h5>{{ m.date_created }}</h5>
+    </div>
+    {% endfor %}
+</section>
+<section>
+    <form method="post">
+        <input type="text" name="message" required>
+        <input type="submit" value="Send">
+    </form>
+</section>
+{% endblock content %}
